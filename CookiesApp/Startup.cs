@@ -28,8 +28,12 @@ namespace CookiesApp
             services.AddControllersWithViews();
             
             services.AddHttpContextAccessor();
+            services.AddScoped<IServiceImplementor, ClicksCounter>(); // ClicksCounter, UserSettings
+            //services.AddCookieCategory();
+            services.AddScoped<IServiceProvider, CookieCategory<IServiceImplementor>>(); // CookieCategory(keyValue, ClicksCount)
             services.AddTransient<ICookieService, CookieService>();
-            services.AddTransient<IServiceProvider, ClicksCounter>();
+            
+            //services.AddTransient<IServiceImplementor, UserSettings>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

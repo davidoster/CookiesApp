@@ -8,23 +8,51 @@ namespace CookiesApp.Services
     // UserSettings
     // IdentityUser
     // and stores to the browser inside a cookie the key,value pair that is supplied by the cookie
-    public class CookieCategory<KeyValuePair, IServiceProvider> //: ICookieCategory
+    public class CookieCategory<IServiceImplementor> : ICookieCategory, IServiceProvider //<KeyValuePair, IServiceImplementor> : IServiceProvider
     {
-        private readonly IServiceProvider _serviceProvider;
-        public CookieCategory(KeyValuePair keyValuePair, IServiceProvider serviceProvider)
+        //private readonly KeyValuePair _keyValuePair;
+        private readonly IServiceImplementor _serviceImplementor;
+
+        public CookieCategory()
         {
-            _serviceProvider = serviceProvider;
+
         }
 
-        public void ManageClicks()
+        public CookieCategory(IServiceImplementor serviceImplementor) //(KeyValuePair keyValuePair, IServiceImplementor serviceImplementor)
         {
-            if(_serviceProvider.GetType() == typeof (ClicksCounter))
+            //_keyValuePair = keyValuePair;
+           _serviceImplementor = serviceImplementor;
+        }
+
+        public object GetService(Type serviceType)
+        {
+            if (serviceType.GetType() == typeof(ClicksCounter))
             {
-                var myClicksCounter = new ClicksCounter(_serviceProvider);
-                myClicksCounter.IncrementClicks();
-                Debug.WriteLine(myClicksCounter.GetClicks());
+                return _serviceImplementor;
             }
-            
+            if(serviceType.GetType() == typeof(UserSettings))
+            {
+                return _serviceImplementor;
+            }
+            return null;
+        }
+
+        public void ManageClicks(ClicksCounter clicksCounter)
+        {
+            clicksCounter.IncrementClicks();
+            Debug.WriteLine(clicksCounter.GetClicks());
+            //if(_serviceProvider.GetType() == typeof (ClicksCounter))
+            //{
+            //    var myClicksCounter = new ClicksCounter(_serviceProvider);
+            //    myClicksCounter.IncrementClicks();
+            //    Debug.WriteLine(myClicksCounter.GetClicks());
+            //}
+
+        }
+
+        public void ManageUserSettings(UserSettings userSettings)
+        {
+            throw new NotImplementedException();
         }
     }
 }

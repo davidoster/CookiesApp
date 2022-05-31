@@ -2,7 +2,7 @@
 
 namespace CookiesApp.Services
 {
-    public class ClicksCounter : IServiceProvider
+    public class ClicksCounter : IClicksCounter, IServiceImplementor
     {
         public int NoOfClicks;
 
@@ -18,11 +18,6 @@ namespace CookiesApp.Services
         }
 
         public object ServiceProvider { get; }
-
-        public object GetService(Type serviceType)
-        {
-            return ServiceProvider;
-        }
 
         public void IncrementClicks()
         {
