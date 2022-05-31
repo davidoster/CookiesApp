@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace CookiesApp.Controllers
@@ -23,6 +24,16 @@ namespace CookiesApp.Controllers
 
         public IActionResult Index()
         {
+            var clicksCounterCookieService = new CookieCategory<Cookie, ClicksCounter>();
+            //var userSettingsCookieService = new CookieCategory<Cookie, UserSettings>();
+
+            clicksCounterCookieService.ManageClicks();
+            //clicksCounterCookieService.GetClicks();
+
+            //userSettingsCookieService.ManageUserSettings();
+            //userSettingsCookieService.GetUserSettings();
+            
+            // var clicksCounter = CookieServiceProvider.GetService(ICookieCategory<ClicksCounter>);
             var cookie = _cookieService.Get("clicksCounter");
             if (cookie != null) //HttpContext.Request.Cookies.ContainsKey("koukou"))
             {
