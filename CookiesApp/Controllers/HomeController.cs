@@ -22,9 +22,11 @@ namespace CookiesApp.Controllers
             _cookieService = cookieService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(ClicksCounter clicksCounter) //, IServiceProvider userSettings)
         {
-            var clicksCounterCookieService = new CookieCategory<Cookie, ClicksCounter>();
+            var myKeyValuePair = new KeyValuePair<string, int>("HomeIndexClicks", 0);
+     
+            var clicksCounterCookieService = new CookieCategory<KeyValuePair<string, int>, ClicksCounter>(myKeyValuePair, clicksCounter);
             //var userSettingsCookieService = new CookieCategory<Cookie, UserSettings>();
 
             clicksCounterCookieService.ManageClicks();
